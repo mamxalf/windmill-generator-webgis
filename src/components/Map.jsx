@@ -20,14 +20,22 @@ export default function Map({ maptilerKey }) {
 
         map.current = new maptilersdk.Map({
             container: mapContainer.current,
-            style: maptilersdk.MapStyle.DATAVIZ,
+            style: maptilersdk.MapStyle.OPENSTREETMAP,
             center: [temanggung.lng, temanggung.lat],
             zoom: zoom,
-            hash: true
+            hash: true,
+            scaleControl: true,
+            fullscreenControl: "top-left",
+            geolocateControl: true,
+            navigationControl: true,
+            terrainControl: true,
+            pitch: 70,
+            bearing: -100.86,
+            maxPitch: 85,
         });
 
         const temperatureLayer = new maptilerweather.TemperatureLayer({
-            opacity: 0.3,
+            opacity: 0.2,
         });
 
         const windLayer = new maptilerweather.WindLayer({
@@ -80,7 +88,7 @@ export default function Map({ maptilerKey }) {
                 onlyRendered: false,
                 reverseOrder: true
             };
-            map.current.addControl(new MaplibreLegendControl.MaplibreLegendControl(targets, options), "bottom-left");
+            map.current.addControl(new MaplibreLegendControl.MaplibreLegendControl(targets, options), "bottom-right");
         });
 
         new maptilersdk.Marker({ color: "#FF0000" })
