@@ -18,7 +18,8 @@ export default function Map() {
             container: mapContainer.current,
             style: maptilersdk.MapStyle.DATAVIZ,
             center: [temanggung.lng, temanggung.lat],
-            zoom: zoom
+            zoom: zoom,
+            hash: true
         });
 
         const temperatureLayer = new maptilerweather.TemperatureLayer({
@@ -36,10 +37,30 @@ export default function Map() {
             fastColor: [0, 0, 0, 100],
         });
 
-        map.current.on('load', () => {
+        map.current.on('load', async () => {
             map.current.setPaintProperty("Water", 'fill-color', "rgba(0, 0, 0, 0.6)");
             map.current.addLayer(windLayer);
             map.current.addLayer(temperatureLayer, "Water");
+
+            // EXAMPLE GEOJSON Implementation
+            const mockGeojson = await fetch('/mock-polygon.json');
+            // if (!mockGeojson.ok) {
+            //     throw new Error('Network response was not ok');
+            // }
+            map.current.addSource('mock_polygon', {
+                type: 'geojson',
+                data: await mockGeojson.json()
+            });
+            map.current.addLayer({
+                'id': 'mock_polygon',
+                'type': 'fill',
+                'source': 'mock_polygon',
+                'layout': {},
+                'paint': {
+                    'fill-color': '#98b',
+                    'fill-opacity': 0.8
+                }
+            });
         });
 
         new maptilersdk.Marker({ color: "#FF0000" })
