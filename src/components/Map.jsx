@@ -3,7 +3,9 @@
 import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
+import * as MaplibreLegendControl from "@watergis/maplibre-gl-legend";
 import "@maptiler/sdk/dist/maptiler-sdk.css";
+import '@watergis/maplibre-gl-legend/dist/maplibre-gl-legend.css';
 import '../styles/map.css';
 
 export default function Map({ maptilerKey }) {
@@ -25,7 +27,7 @@ export default function Map({ maptilerKey }) {
         });
 
         const temperatureLayer = new maptilerweather.TemperatureLayer({
-            opacity: 0.8,
+            opacity: 0.3,
         });
 
         const windLayer = new maptilerweather.WindLayer({
@@ -64,6 +66,21 @@ export default function Map({ maptilerKey }) {
                     'fill-opacity': 0.8
                 }
             });
+
+            const targets = {
+                Residential: "Residential",
+                Water: "Water",
+                Building: "Building",
+                Airport: "Airport",
+                "Other POI": "Pois",
+            };
+            const options = {
+                showDefault: true,
+                showCheckbox: true,
+                onlyRendered: false,
+                reverseOrder: true
+            };
+            map.current.addControl(new MaplibreLegendControl.MaplibreLegendControl(targets, options), "bottom-left");
         });
 
         new maptilersdk.Marker({ color: "#FF0000" })

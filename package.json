@@ -11,6 +11,7 @@
   "dependencies": {
     "@maptiler/sdk": "^2.0.3",
     "@maptiler/weather": "^2.0.0",
+    "@watergis/maplibre-gl-legend": "^2.0.5",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18"
