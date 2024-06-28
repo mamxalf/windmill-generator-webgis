@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
 import * as MaplibreLegendControl from "@watergis/maplibre-gl-legend";
+import { baseMapConfig, mapLibreConfig, mapPoint, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import '@watergis/maplibre-gl-legend/dist/maplibre-gl-legend.css';
 import '../styles/map.css';
@@ -11,7 +12,6 @@ import '../styles/map.css';
 export default function Map({ maptilerKey }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const temanggung = { lng: 110.1752408, lat: -7.3161926 };
     const [zoom] = useState(15);
     maptilersdk.config.apiKey = maptilerKey;
 
@@ -21,32 +21,15 @@ export default function Map({ maptilerKey }) {
         map.current = new maptilersdk.Map({
             container: mapContainer.current,
             style: maptilersdk.MapStyle.OPENSTREETMAP,
-            center: [temanggung.lng, temanggung.lat],
             zoom: zoom,
-            hash: true,
-            scaleControl: true,
-            fullscreenControl: "top-left",
-            geolocateControl: true,
-            navigationControl: true,
-            terrainControl: true,
-            pitch: 70,
-            bearing: -100.86,
-            maxPitch: 85,
+            ...baseMapConfig
         });
 
-        const temperatureLayer = new maptilerweather.TemperatureLayer({
-            opacity: 0.2,
-        });
+        const temperatureLayer = new maptilerweather.TemperatureLayer(temperaturConfigLayer);
 
         const windLayer = new maptilerweather.WindLayer({
-            id: "Wind Particles",
             colorramp: maptilerweather.ColorRamp.builtin.NULL,
-            speed: 0.010,
-            fadeFactor: 0.03,
-            maxAmount: 256,
-            density: 200,
-            color: [0, 0, 0, 30],
-            fastColor: [0, 0, 0, 100],
+            ...windConfigLayer
         });
 
         map.current.on('load', async () => {
@@ -75,26 +58,13 @@ export default function Map({ maptilerKey }) {
                 }
             });
 
-            const targets = {
-                Residential: "Residential",
-                Water: "Water",
-                Building: "Building",
-                Airport: "Airport",
-                "Other POI": "Pois",
-            };
-            const options = {
-                showDefault: true,
-                showCheckbox: true,
-                onlyRendered: false,
-                reverseOrder: true
-            };
-            map.current.addControl(new MaplibreLegendControl.MaplibreLegendControl(targets, options), "bottom-right");
+            map.current.addControl(new MaplibreLegendControl.MaplibreLegendControl(mapLibreConfig.targets, mapLibreConfig.options), "bottom-right");
         });
 
         new maptilersdk.Marker({ color: "#FF0000" })
-            .setLngLat([temanggung.lng, temanggung.lat])
+            .setLngLat([mapPoint.lng, mapPoint.lat])
             .addTo(map.current);
-    }, [temanggung.lng, temanggung.lat, zoom]);
+    }, [zoom]);
 
     return (
         <div className="map-wrap">
