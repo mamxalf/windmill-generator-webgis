@@ -1,9 +1,9 @@
-import Map from '@/components/Map';
+import Map from "@/components/Map";
 
 export default function Home() {
-  return (
-    <>
-      <Map maptilerKey={process.env.MAPTILER_KEY} />
-    </>
-  );
+    return (
+        <main>
+            <Map maptilerKey={process.env.MAPTILER_KEY} />
+        </main>
+    );
 }
