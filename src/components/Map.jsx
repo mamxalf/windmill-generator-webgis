@@ -43,8 +43,8 @@ export default function Map({ maptilerKey }) {
 
         map.current.on('load', async () => {
             map.current.setPaintProperty("Water", 'fill-color', "rgba(0, 0, 0, 0.6)");
-            // map.current.addLayer(windLayer);
-            // map.current.addLayer(temperatureLayer, "Water");
+            map.current.addLayer(windLayer);
+            map.current.addLayer(temperatureLayer, "Water");
 
             // EXAMPLE GEOJSON Implementation
             const mockGeojson = await fetch('/api/dummy');
