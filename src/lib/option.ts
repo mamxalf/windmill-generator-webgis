@@ -27,18 +27,65 @@ export const windConfigLayer = {
   fastColor: [0, 0, 0, 100],
 };
 
-export const mapLibreConfig = {
-  targets: {
-    Residential: "Residential",
-    Water: "Water",
-    Building: "Building",
-    Airport: "Airport",
-    "Other POI": "Pois",
+export const legend = {
+  alang_alang: {
+    id: "alang-alang",
+    color: "#A8D08D",
+    opacity: 0.7,
   },
-  options: {
-    showDefault: true,
-    showCheckbox: true,
-    onlyRendered: false,
-    reverseOrder: true,
+  bangunan: {
+    id: "bangunan",
+    color: "#FF6347",
+    opacity: 0.9,
+  },
+  hutan_kering: {
+    id: "hutan-kering",
+    color: "#228B22",
+    opacity: 0.6,
+  },
+  jalan_garis: {
+    id: "jalan-garis",
+    color: "#000000",
+    opacity: 1,
+  },
+  kabel_listrik: {
+    id: "kabel-listrik",
+    color: "#FFD700",
+    opacity: 0.8,
+  },
+  kebun: {
+    id: "kebun",
+    color: "#32CD32",
+    opacity: 0.7,
+  },
+  ladang: {
+    id: "ladang",
+    color: "#8B4513",
+    opacity: 0.7,
+  },
+  pemukiman: {
+    id: "pemukiman",
+    color: "#D3D3D3",
+    opacity: 0.8,
+  },
+  sawah: {
+    id: "sawah",
+    color: "#98FB98",
+    opacity: 0.6,
+  },
+  semak_belukar: {
+    id: "semak-belukar",
+    color: "#556B2F",
+    opacity: 0.6,
+  },
+  sungai: {
+    id: "sungai",
+    color: "#1E90FF",
+    opacity: 0.5,
+  },
+  tanaman_campur: {
+    id: "tanaman-campur",
+    color: "#6B8E23",
+    opacity: 0.6,
   },
 };
