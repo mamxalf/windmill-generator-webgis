@@ -6,7 +6,6 @@ import * as maptilerweather from '@maptiler/weather';
 import { baseMapConfig, legend, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
 import { addGeojsonLayer } from '@/lib/coverEngine'
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import '@watergis/maplibre-gl-legend/dist/maplibre-gl-legend.css';
 import '../styles/map.css';
 
 export default function Map({ maptilerKey }) {

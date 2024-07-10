@@ -8,9 +8,9 @@ export const baseMapConfig = {
   geolocateControl: true,
   navigationControl: true,
   // terrainControl: true,
-  pitch: 70,
-  bearing: -100.86,
-  maxPitch: 85,
+  // pitch: 70,
+  // bearing: -100.86,
+  // maxPitch: 85,
 };
 
 export const temperaturConfigLayer = {
