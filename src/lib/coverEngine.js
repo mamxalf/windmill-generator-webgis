@@ -15,4 +15,10 @@ export const addGeojsonLayer = async (map, legend, key) => {
             'fill-opacity': legend[key].opacity
         }
     });
+
+    if (legend[key].visibility) {
+        map.current.setLayoutProperty(legend[key].id, 'visibility', 'visible');
+    } else {
+        map.current.setLayoutProperty(legend[key].id, 'visibility', 'none');
+    }
 };
