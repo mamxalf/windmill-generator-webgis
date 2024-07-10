@@ -3,10 +3,9 @@
 import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
-import { baseMapConfig, legend, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
+import { baseMapConfig, legend, station1, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
 import { addGeojsonLayer } from '@/lib/coverEngine'
 import "@maptiler/sdk/dist/maptiler-sdk.css";
-import '@watergis/maplibre-gl-legend/dist/maplibre-gl-legend.css';
 import '../styles/map.css';
 
 export default function Map({ maptilerKey }) {
@@ -37,9 +36,14 @@ export default function Map({ maptilerKey }) {
             map.current.addLayer(windLayer);
             map.current.addLayer(temperatureLayer, "Water");
 
-            // alang alang
+            // primary cover
             for (const key in legend) {
                 await addGeojsonLayer(map, legend, key);
+            }
+
+            // station 1
+            for (const key in station1) {
+                await addGeojsonLayer(map, station1, key);
             }
 
         });
