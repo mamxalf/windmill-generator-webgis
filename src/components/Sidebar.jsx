@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 import Legend from "./ExtendedSidebar/Legend";
 import Example from "./ExtendedSidebar/Example";
@@ -13,7 +12,7 @@ function ExtendSidebar({ onClick, children }) {
             <div className="px-4 py-6">
                 <button
                     onClick={onClick}
-                    class="group relative flex w-full justify-center rounded-lg text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                    className="group relative flex w-full justify-center rounded-lg text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 >
                     <svg
                         width="24"
@@ -69,11 +68,10 @@ export default function Sidebar() {
                             <a
                                 onClick={() => handleClick("legend")}
                                 href="#"
-                                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
-                                    isActiveMenu === "legend"
-                                        ? "bg-gray-100"
-                                        : ""
-                                }`}
+                                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "legend"
+                                    ? "bg-gray-100"
+                                    : ""
+                                    }`}
                             >
                                 Legend
                             </a>
@@ -110,11 +108,10 @@ export default function Sidebar() {
                                                 handleClick("example")
                                             }
                                             href="#"
-                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
-                                                isActiveMenu === "example"
-                                                    ? "bg-gray-100"
-                                                    : ""
-                                            }`}
+                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "example"
+                                                ? "bg-gray-100"
+                                                : ""
+                                                }`}
                                         >
                                             Example
                                         </a>
