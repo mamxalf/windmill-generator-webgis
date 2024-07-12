@@ -60,20 +60,23 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="flex w-48 h-screen flex-col justify-between border-e bg-white">
+            <div className="flex w-52 h-screen flex-col justify-between border-e bg-white">
                 <div className="px-4 py-6">
-                    <h1 className="text-center font-semibold text-emerald-700 ">Windmill Generator</h1>
+                    <h1 className="text-center font-semibold text-emerald-700 text-xl">
+                        Windmill Generator
+                    </h1>
                     <ul className="mt-6 space-y-1">
                         <li>
                             <a
                                 onClick={() => handleClick("legend")}
                                 href="#"
-                                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "legend"
-                                    ? "bg-gray-100"
-                                    : ""
-                                    }`}
+                                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
+                                    isActiveMenu === "legend"
+                                        ? "bg-gray-100"
+                                        : ""
+                                }`}
                             >
-                                Legend
+                                Legends
                             </a>
                         </li>
 
@@ -108,10 +111,11 @@ export default function Sidebar() {
                                                 handleClick("example")
                                             }
                                             href="#"
-                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "example"
-                                                ? "bg-gray-100"
-                                                : ""
-                                                }`}
+                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
+                                                isActiveMenu === "example"
+                                                    ? "bg-gray-100"
+                                                    : ""
+                                            }`}
                                         >
                                             Example
                                         </a>
