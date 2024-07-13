@@ -22,9 +22,11 @@ export const windConfigLayer = {
   speed: 0.01,
   fadeFactor: 0.03,
   maxAmount: 256,
-  density: 200,
+  density: 100,
   color: [0, 0, 0, 30],
   fastColor: [0, 0, 0, 100],
+  fastIsLarger: true,
+  size: 3
 };
 
 export const station1 = {
