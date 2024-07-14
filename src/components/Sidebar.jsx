@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import Legend from "./ExtendedSidebar/Legend";
 import Example from "./ExtendedSidebar/Example";
+import GeneralInfo from "./ExtendedSidebar/GeneralInfo";
+import StationInfo from "./ExtendedSidebar/Station";
 
 function ExtendSidebar({ onClick, children }) {
     return (
@@ -48,6 +50,14 @@ export default function Sidebar() {
 
         if (props === "example") {
             setComponentChild(<Example />);
+        }
+
+        if (props === "info") {
+            setComponentChild(<GeneralInfo />);
+        }
+
+        if (props === "station") {
+            setComponentChild(<StationInfo />);
         }
 
         setIsActiveMenu(props);
@@ -102,6 +112,34 @@ export default function Sidebar() {
                                 </summary>
 
                                 <ul className="mt-2 space-y-1 px-4">
+                                    <li>
+                                        <a
+                                            onClick={() =>
+                                                handleClick("info")
+                                            }
+                                            href="#"
+                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "info"
+                                                ? "bg-gray-100"
+                                                : ""
+                                                }`}
+                                        >
+                                            General Info
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            onClick={() =>
+                                                handleClick("station")
+                                            }
+                                            href="#"
+                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "station"
+                                                ? "bg-gray-100"
+                                                : ""
+                                                }`}
+                                        >
+                                            Station Info
+                                        </a>
+                                    </li>
                                     <li>
                                         <a
                                             onClick={() =>
