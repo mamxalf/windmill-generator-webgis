@@ -1,4 +1,4 @@
-export const mapPoint = { lng: 110.1752408, lat: -7.3161926 };
+export const mapPoint = { lng: 110.11182, lat: -7.1882 };
 
 export const baseMapConfig = {
   center: [mapPoint.lng, mapPoint.lat],
@@ -26,7 +26,7 @@ export const windConfigLayer = {
   color: [0, 0, 0, 30],
   fastColor: [0, 0, 0, 100],
   fastIsLarger: true,
-  size: 3
+  size: 3,
 };
 
 export const station1 = {

@@ -13,7 +13,7 @@ export default function Map({ maptilerKey }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [zoom] = useState(15);
-    maptilersdk.config.apiKey = 'KOuuIHYHIa1Le2qGf39o';
+    maptilersdk.config.apiKey = maptilerKey;
 
     const legend = useLayerStore((state) => state.legend);
 
