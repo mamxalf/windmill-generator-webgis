@@ -26,7 +26,7 @@ export const windConfigLayer = {
   color: [0, 0, 0, 30],
   fastColor: [0, 0, 0, 100],
   fastIsLarger: true,
-  size: 3,
+  size: 2,
 };
 
 export const station1 = {
