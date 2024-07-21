@@ -6,6 +6,7 @@ import Legend from "./ExtendedSidebar/Legend";
 import Example from "./ExtendedSidebar/Example";
 import GeneralInfo from "./ExtendedSidebar/GeneralInfo";
 import StationInfo from "./ExtendedSidebar/Station";
+import CoverInfo from "./ExtendedSidebar/CoverInfo";
 
 function ExtendSidebar({ onClick, children }) {
     return (
@@ -52,6 +53,10 @@ export default function Sidebar() {
             setComponentChild(<Example />);
         }
 
+        if (props === "cover") {
+            setComponentChild(<CoverInfo />);
+        }
+
         if (props === "info") {
             setComponentChild(<GeneralInfo />);
         }
@@ -80,11 +85,10 @@ export default function Sidebar() {
                             <a
                                 onClick={() => handleClick("legend")}
                                 href="#"
-                                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
-                                    isActiveMenu === "legend"
-                                        ? "bg-gray-100"
-                                        : ""
-                                }`}
+                                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "legend"
+                                    ? "bg-gray-100"
+                                    : ""
+                                    }`}
                             >
                                 Legends
                             </a>
@@ -132,6 +136,20 @@ export default function Sidebar() {
                                     <li>
                                         <a
                                             onClick={() =>
+                                                handleClick("cover")
+                                            }
+                                            href="#"
+                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "cover"
+                                                ? "bg-gray-100"
+                                                : ""
+                                                }`}
+                                        >
+                                            Cover Info
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            onClick={() =>
                                                 handleClick("station")
                                             }
                                             href="#"
@@ -149,11 +167,10 @@ export default function Sidebar() {
                                                 handleClick("example")
                                             }
                                             href="#"
-                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
-                                                isActiveMenu === "example"
-                                                    ? "bg-gray-100"
-                                                    : ""
-                                            }`}
+                                            className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActiveMenu === "example"
+                                                ? "bg-gray-100"
+                                                : ""
+                                                }`}
                                         >
                                             Example
                                         </a>
