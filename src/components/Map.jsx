@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
-import { baseMapConfig, station1, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
+import { baseMapConfig, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
 import { addGeojsonLayer } from '@/lib/coverEngine';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import '../styles/map.css';
@@ -12,7 +12,7 @@ import useLayerStore from '../stores/layer';
 export default function Map({ maptilerKey }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [zoom] = useState(15);
+    const [zoom] = useState(13);
     maptilersdk.config.apiKey = maptilerKey;
 
     const legend = useLayerStore((state) => state.legend);
@@ -38,14 +38,9 @@ export default function Map({ maptilerKey }) {
             map.current.addLayer(windLayer);
             map.current.addLayer(temperatureLayer, "Water");
 
-            // primary cover
+            // cover map
             for (const key in legend) {
                 await addGeojsonLayer(map, legend, key);
-            }
-
-            // station 1
-            for (const key in station1) {
-                await addGeojsonLayer(map, station1, key);
             }
         });
     }, [zoom, legend]);
