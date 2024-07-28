@@ -3,8 +3,8 @@
 import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
-import { baseMapConfig, station1, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
-import { addGeojsonLayer } from '@/lib/coverEngine';
+import { baseMapConfig, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
+import { addGeojsonLayer, addHoverEffect, calculatePointAndCoordinates, popUpInfo } from '@/lib/coverEngine';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import '../styles/map.css';
 import useLayerStore from '../stores/layer';
@@ -12,10 +12,13 @@ import useLayerStore from '../stores/layer';
 export default function Map({ maptilerKey }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [zoom] = useState(15);
+    const hoveredStateIdRef = useRef(null);
+    const [zoom] = useState(13);
     maptilersdk.config.apiKey = maptilerKey;
 
     const legend = useLayerStore((state) => state.legend);
+    const station = useLayerStore((state) => state.station);
+    const mergeLayer = Object.assign({}, legend, station);
 
     useEffect(() => {
         if (map.current) return; // stops map from initializing more than once
@@ -39,25 +42,29 @@ export default function Map({ maptilerKey }) {
             map.current.addLayer(temperatureLayer, "Water");
 
             // primary cover
-            for (const key in legend) {
-                await addGeojsonLayer(map, legend, key);
+            for (const key in mergeLayer) {
+                await addGeojsonLayer(map.current, mergeLayer, key);
             }
 
-            // station 1
-            for (const key in station1) {
-                await addGeojsonLayer(map, station1, key);
-            }
+            // Add hover effect
+            addHoverEffect(map.current, 'station-1', 'station-1', hoveredStateIdRef);
+
+            // popUp
+            popUpInfo(maptilersdk, map.current, 'station-1')
+
+            // calculate point and coordinates
+            calculatePointAndCoordinates(map.current)
         });
-    }, [zoom, legend]);
+    }, [zoom, mergeLayer]);
 
     useEffect(() => {
         // Update layers based on the visibility state
         if (map.current && map.current.isStyleLoaded()) {
-            for (const key in legend) {
-                addGeojsonLayer(map, legend, key);
+            for (const key in mergeLayer) {
+                addGeojsonLayer(map.current, mergeLayer, key);
             }
         }
-    }, [legend]);
+    }, [mergeLayer]);
 
     return (
         <div className="map-wrap">

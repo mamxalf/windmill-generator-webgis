@@ -9,8 +9,17 @@ interface LegendItem {
   visibility: boolean;
 }
 
+interface StationItem {
+  id: string;
+  name: string;
+  color: string;
+  opacity: number;
+  visibility: boolean;
+}
+
 interface LegendState {
   legend: Record<string, LegendItem>;
+  station: Record<string, StationItem>;
   toggleVisibility: (itemId: string) => void;
 }
 
@@ -21,96 +30,128 @@ const useLayerStore = create<LegendState>((set) => ({
       name: "Alang Alang",
       color: "#A8D08D",
       opacity: 0.7,
-      visibility: true,
+      visibility: false,
     },
     bangunan: {
       id: "bangunan",
       name: "Bangunan",
       color: "#FF6347",
       opacity: 0.9,
-      visibility: true,
+      visibility: false,
     },
     hutan_kering: {
       id: "hutan-kering",
       name: "Hutan Kering",
       color: "#228B22",
       opacity: 0.6,
-      visibility: true,
+      visibility: false,
     },
-    jalan_garis: {
-      id: "jalan-garis",
-      name: "Jalan (Garis)",
-      color: "#000000",
-      opacity: 1,
-      visibility: true,
-    },
-    kabel_listrik: {
-      id: "kabel-listrik",
-      name: "Kabel Listrik",
-      color: "#FFD700",
-      opacity: 0.8,
-      visibility: true,
-    },
+    // jalan_garis: {
+    //   id: "jalan-garis",
+    //   name: "Jalan (Garis)",
+    //   color: "#000000",
+    //   opacity: 1,
+    //   visibility: false,
+    // },
+    // kabel_listrik: {
+    //   id: "kabel-listrik",
+    //   name: "Kabel Listrik",
+    //   color: "#FFD700",
+    //   opacity: 0.8,
+    //   visibility: false,
+    // },
     kebun: {
       id: "kebun",
       name: "Kebun",
       color: "#32CD32",
       opacity: 0.7,
-      visibility: true,
+      visibility: false,
     },
     ladang: {
       id: "ladang",
       name: "Ladang",
       color: "#8B4513",
       opacity: 0.7,
-      visibility: true,
+      visibility: false,
     },
     pemukiman: {
       id: "pemukiman",
       name: "Pemukiman",
       color: "#D3D3D3",
       opacity: 0.8,
-      visibility: true,
+      visibility: false,
     },
     sawah: {
       id: "sawah",
       name: "Sawah",
       color: "#98FB98",
       opacity: 0.6,
-      visibility: true,
+      visibility: false,
     },
     semak_belukar: {
       id: "semak-belukar",
       name: "Semak Belukar",
       color: "#556B2F",
       opacity: 0.6,
-      visibility: true,
+      visibility: false,
     },
     sungai: {
       id: "sungai",
       name: "Sungai",
       color: "#1E90FF",
       opacity: 0.5,
-      visibility: true,
+      visibility: false,
     },
     tanaman_campur: {
       id: "tanaman-campur",
       name: "Tanaman Campur",
       color: "#6B8E23",
       opacity: 0.6,
+      visibility: false,
+    },
+  },
+  station: {
+    safety_zone: {
+      id: "safety-zone",
+      name: "Batas Zona Aman",
+      color: "#6B8",
+      opacity: 0.7,
       visibility: true,
     },
+    road_safety_zone: {
+      id: "road-safety-zone",
+      name: "Batas Zona Aman (Jalan)",
+      color: "#AF6341",
+      opacity: 0.7,
+      visibility: true,
+    },
+    station_1: {
+      id: "station-1",
+      name: "Stasiun (Lapangan Kincir Angin) #1",
+      color: "#1E90AA",
+      opacity: 0.7,
+      visibility: true,
+    }
   },
   toggleVisibility: (itemId) =>
     set((state) => {
-      const item = state.legend[itemId];
-      if (item) {
+      if (state.legend[itemId]) {
         return {
           legend: {
             ...state.legend,
             [itemId]: {
               ...state.legend[itemId],
               visibility: !state.legend[itemId].visibility,
+            },
+          },
+        };
+      } else if (state.station[itemId]) {
+        return {
+          station: {
+            ...state.station,
+            [itemId]: {
+              ...state.station[itemId],
+              visibility: !state.station[itemId].visibility,
             },
           },
         };
