@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
 import { baseMapConfig, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
-import { addGeojsonLayer } from '@/lib/coverEngine';
+import { addGeojsonLayer, addHoverEffect, calculatePointAndCoordinates, popUpInfo } from '@/lib/coverEngine';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import '../styles/map.css';
 import useLayerStore from '../stores/layer';
@@ -45,44 +45,15 @@ export default function Map({ maptilerKey }) {
             for (const key in mergeLayer) {
                 await addGeojsonLayer(map.current, mergeLayer, key);
             }
-        });
 
-        // When the user moves their mouse over the state-fill layer, we'll update the
-        // feature state for the feature under the mouse.
-        map.current.on('mousemove', 'station-1', (e) => {
-            if (e.features.length > 0) {
-                if (hoveredStateIdRef.current !== null) {
-                    map.current.setFeatureState(
-                        { source: 'station-1', id: hoveredStateIdRef.current },
-                        { hover: false }
-                    );
-                }
-                hoveredStateIdRef.current = e.features[0].id;
-                map.current.setFeatureState(
-                    { source: 'station-1', id: hoveredStateIdRef.current },
-                    { hover: true }
-                );
-            }
-        });
+            // Add hover effect
+            addHoverEffect(map.current, 'station-1', 'station-1', hoveredStateIdRef);
 
-        // When the mouse leaves the state-fill layer, update the feature state of the
-        // previously hovered feature.
-        map.current.on('mouseleave', 'station-1', () => {
-            if (hoveredStateIdRef.current !== null) {
-                map.current.setFeatureState(
-                    { source: 'station-1', id: hoveredStateIdRef.current },
-                    { hover: false }
-                );
-            }
-            hoveredStateIdRef.current = null;
-        });
+            // popUp
+            popUpInfo(maptilersdk, map.current, 'station-1')
 
-        // Calculate point and lat/lng
-        map.current.on('mousemove', (e) => {
-            document.getElementById('x-point').textContent = e.point.x;
-            document.getElementById('y-point').textContent = e.point.y;
-            document.getElementById('lat-point').textContent = e.lngLat.lat;
-            document.getElementById('lng-point').textContent = e.lngLat.lng;
+            // calculate point and coordinates
+            calculatePointAndCoordinates(map.current)
         });
     }, [zoom, mergeLayer]);
 

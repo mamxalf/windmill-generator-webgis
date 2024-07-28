@@ -52,3 +52,51 @@ export const addGeojsonLayer = async (map, legend, key) => {
         );
     }
 };
+
+export const addHoverEffect = (map, sourceId, layerId, hoveredStateIdRef) => {
+    map.on('mousemove', layerId, (e) => {
+        if (e.features.length > 0) {
+            if (hoveredStateIdRef.current !== null) {
+                map.setFeatureState(
+                    { source: sourceId, id: hoveredStateIdRef.current },
+                    { hover: false }
+                );
+            }
+            hoveredStateIdRef.current = e.features[0].id;
+            map.setFeatureState(
+                { source: sourceId, id: hoveredStateIdRef.current },
+                { hover: true }
+            );
+        }
+    });
+
+    map.on('mouseleave', layerId, () => {
+        if (hoveredStateIdRef.current !== null) {
+            map.setFeatureState(
+                { source: sourceId, id: hoveredStateIdRef.current },
+                { hover: false }
+            );
+        }
+        hoveredStateIdRef.current = null;
+    });
+}
+
+export const popUpInfo = (mapSdk, map, layerId) => {
+    map.on('click', layerId, (e) => {
+        const properties = e.features[0].properties
+        new mapSdk.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(`name: ${properties.name} | remark: ${properties.REMARK} | luas: ${properties.luas} ha`)
+            .addTo(map);
+    });
+}
+
+export const calculatePointAndCoordinates = (map) => {
+    // Calculate point and lat/lng
+    map.on('mousemove', (e) => {
+        document.getElementById('x-point').textContent = e.point.x;
+        document.getElementById('y-point').textContent = e.point.y;
+        document.getElementById('lat-point').textContent = e.lngLat.lat;
+        document.getElementById('lng-point').textContent = e.lngLat.lng;
+    });
+}
