@@ -12,6 +12,7 @@ import useLayerStore from '../stores/layer';
 export default function Map({ maptilerKey }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
+    const hoveredStateIdRef = useRef(null);
     const [zoom] = useState(13);
     maptilersdk.config.apiKey = maptilerKey;
 
@@ -42,10 +43,41 @@ export default function Map({ maptilerKey }) {
 
             // primary cover
             for (const key in mergeLayer) {
-                await addGeojsonLayer(map, mergeLayer, key);
+                await addGeojsonLayer(map.current, mergeLayer, key);
             }
         });
 
+        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.current.on('mousemove', 'station-1', (e) => {
+            if (e.features.length > 0) {
+                if (hoveredStateIdRef.current !== null) {
+                    map.current.setFeatureState(
+                        { source: 'station-1', id: hoveredStateIdRef.current },
+                        { hover: false }
+                    );
+                }
+                hoveredStateIdRef.current = e.features[0].id;
+                map.current.setFeatureState(
+                    { source: 'station-1', id: hoveredStateIdRef.current },
+                    { hover: true }
+                );
+            }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.current.on('mouseleave', 'station-1', () => {
+            if (hoveredStateIdRef.current !== null) {
+                map.current.setFeatureState(
+                    { source: 'station-1', id: hoveredStateIdRef.current },
+                    { hover: false }
+                );
+            }
+            hoveredStateIdRef.current = null;
+        });
+
+        // Calculate point and lat/lng
         map.current.on('mousemove', (e) => {
             document.getElementById('x-point').textContent = e.point.x;
             document.getElementById('y-point').textContent = e.point.y;
@@ -58,7 +90,7 @@ export default function Map({ maptilerKey }) {
         // Update layers based on the visibility state
         if (map.current && map.current.isStyleLoaded()) {
             for (const key in mergeLayer) {
-                addGeojsonLayer(map, mergeLayer, key);
+                addGeojsonLayer(map.current, mergeLayer, key);
             }
         }
     }, [mergeLayer]);

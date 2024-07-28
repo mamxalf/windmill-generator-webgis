@@ -1,36 +1,51 @@
 // lib/coverEngine.js
 export const addGeojsonLayer = async (map, legend, key) => {
     // Check if the source already exists
-    if (map.current.getSource(legend[key].id)) {
+    if (map.getSource(legend[key].id)) {
         // Update visibility only
         if (legend[key].visibility) {
-            map.current.setLayoutProperty(legend[key].id, 'visibility', 'visible');
+            map.setLayoutProperty(legend[key].id, 'visibility', 'visible');
         } else {
-            map.current.setLayoutProperty(legend[key].id, 'visibility', 'none');
+            map.setLayoutProperty(legend[key].id, 'visibility', 'none');
         }
     } else {
-        // Fetch the geojson data
-        const response = await fetch(`/${key}.geojson`);
-        const data = await response.json();
 
         // Add source and layer
-        map.current.addSource(legend[key].id, {
+        map.addSource(legend[key].id, {
             type: 'geojson',
-            data: data
+            data: `/${key}.geojson`
         });
-        map.current.addLayer({
-            'id': legend[key].id,
-            'type': 'fill',
-            'source': legend[key].id,
-            'layout': {},
-            'paint': {
-                'fill-color': legend[key].color,
-                'fill-opacity': legend[key].opacity
-            }
-        });
+        if (legend[key].id === 'station-1') {
+            map.addLayer({
+                'id': legend[key].id,
+                'type': 'fill',
+                'source': legend[key].id,
+                'layout': {},
+                'paint': {
+                    'fill-color': legend[key].color,
+                    'fill-opacity': [
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        1,
+                        0.5
+                    ]
+                }
+            });
+        } else {
+            map.addLayer({
+                'id': legend[key].id,
+                'type': 'fill',
+                'source': legend[key].id,
+                'layout': {},
+                'paint': {
+                    'fill-color': legend[key].color,
+                    'fill-opacity': legend[key].opacity
+                }
+            });
+        }
 
         // Set the visibility based on the legend item
-        map.current.setLayoutProperty(
+        map.setLayoutProperty(
             legend[key].id,
             'visibility',
             legend[key].visibility ? 'visible' : 'none'
