@@ -80,6 +80,16 @@ export default function Sidebar() {
                     <h1 className="text-center font-semibold text-emerald-700 text-xl">
                         Windmill Generator
                     </h1>
+                    <hr className="my-2" />
+                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
+                        X: <span id="x-point">0</span> Y: <span id="y-point">0</span>
+                    </h1>
+                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
+                        Lat: <span id="lat-point">0</span>
+                    </h1>
+                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
+                        Lng: <span id="lng-point">0</span>
+                    </h1>
                     <ul className="mt-6 space-y-1">
                         <li>
                             <a

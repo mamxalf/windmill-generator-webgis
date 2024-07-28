@@ -45,6 +45,13 @@ export default function Map({ maptilerKey }) {
                 await addGeojsonLayer(map, mergeLayer, key);
             }
         });
+
+        map.current.on('mousemove', (e) => {
+            document.getElementById('x-point').textContent = e.point.x;
+            document.getElementById('y-point').textContent = e.point.y;
+            document.getElementById('lat-point').textContent = e.lngLat.lat;
+            document.getElementById('lng-point').textContent = e.lngLat.lng;
+        });
     }, [zoom, mergeLayer]);
 
     useEffect(() => {
