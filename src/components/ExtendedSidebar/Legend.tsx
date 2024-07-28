@@ -23,13 +23,13 @@ export default function Legend() {
                                             type="checkbox"
                                             className="defaultCheckbox relative flex h-[16px] min-h-[16px] w-[16px] min-w-[16px] items-center 
                             justify-center rounded-md border border-gray-300 text-white/0 outline-none transition duration-[0.2s]
-                            checked:border-none checked:text-white hover:cursor-pointer dark:border-white/10 checked:bg-red-500 dark:checked:bg-brand-400"
+                            checked:border-none checked:text-white hover:cursor-pointer checked:bg-red-500"
                                             checked={legend[key].visibility}
                                             onChange={() =>
                                                 handleCheckboxChange(key)
                                             }
                                         />
-                                        <p className="text-base tracking-normal font-normal text-zinc-700 dark:text-white">
+                                        <p className="text-base tracking-normal font-normal text-zinc-700">
                                             {` `} {legend[key].name} Layer
                                         </p>
                                     </div>
