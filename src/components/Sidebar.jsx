@@ -6,6 +6,7 @@ import Legend from "./ExtendedSidebar/Legend";
 import GeneralInfo from "./ExtendedSidebar/GeneralInfo";
 import StationInfo from "./ExtendedSidebar/Station";
 import CoverInfo from "./ExtendedSidebar/CoverInfo";
+import Graph from "./ExtendedSidebar/Graph";
 
 function ExtendSidebar({ onClick, children }) {
     return (
@@ -132,6 +133,12 @@ export default function Sidebar() {
                                 </ul>
                             </details>
                         </li>
+                        <SidebarItem
+                            onClick={() => handleClick(<Graph />, "graph")}
+                            isActive={isActiveMenu === "graph"}
+                        >
+                            Graphs
+                        </SidebarItem>
                     </ul>
                 </div>
             </div>
