@@ -16,6 +16,8 @@ export default function Map({ maptilerKey }) {
     maptilersdk.config.apiKey = maptilerKey;
 
     const legend = useLayerStore((state) => state.legend);
+    const station = useLayerStore((state) => state.station);
+    const mergeLayer = Object.assign({}, legend, station);
 
     useEffect(() => {
         if (map.current) return; // stops map from initializing more than once
@@ -38,21 +40,21 @@ export default function Map({ maptilerKey }) {
             map.current.addLayer(windLayer);
             map.current.addLayer(temperatureLayer, "Water");
 
-            // cover map
-            for (const key in legend) {
-                await addGeojsonLayer(map, legend, key);
+            // primary cover
+            for (const key in mergeLayer) {
+                await addGeojsonLayer(map, mergeLayer, key);
             }
         });
-    }, [zoom, legend]);
+    }, [zoom, mergeLayer]);
 
     useEffect(() => {
         // Update layers based on the visibility state
         if (map.current && map.current.isStyleLoaded()) {
-            for (const key in legend) {
-                addGeojsonLayer(map, legend, key);
+            for (const key in mergeLayer) {
+                addGeojsonLayer(map, mergeLayer, key);
             }
         }
-    }, [legend]);
+    }, [mergeLayer]);
 
     return (
         <div className="map-wrap">

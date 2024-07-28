@@ -9,8 +9,17 @@ interface LegendItem {
   visibility: boolean;
 }
 
+interface StationItem {
+  id: string;
+  name: string;
+  color: string;
+  opacity: number;
+  visibility: boolean;
+}
+
 interface LegendState {
   legend: Record<string, LegendItem>;
+  station: Record<string, StationItem>;
   toggleVisibility: (itemId: string) => void;
 }
 
@@ -100,6 +109,8 @@ const useLayerStore = create<LegendState>((set) => ({
       opacity: 0.6,
       visibility: false,
     },
+  },
+  station: {
     safety_zone: {
       id: "safety-zone",
       name: "Batas Zona Aman",
@@ -124,14 +135,23 @@ const useLayerStore = create<LegendState>((set) => ({
   },
   toggleVisibility: (itemId) =>
     set((state) => {
-      const item = state.legend[itemId];
-      if (item) {
+      if (state.legend[itemId]) {
         return {
           legend: {
             ...state.legend,
             [itemId]: {
               ...state.legend[itemId],
               visibility: !state.legend[itemId].visibility,
+            },
+          },
+        };
+      } else if (state.station[itemId]) {
+        return {
+          station: {
+            ...state.station,
+            [itemId]: {
+              ...state.station[itemId],
+              visibility: !state.station[itemId].visibility,
             },
           },
         };
