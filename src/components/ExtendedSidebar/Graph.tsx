@@ -2,7 +2,7 @@
 
 import useLayerStore from "@/stores/layer";
 
-export default function Legend() {
+export default function Graph() {
     const legend = useLayerStore((state) => state.legend);
     const station = useLayerStore((state) => state.station);
     const mergeLayer = Object.assign({}, legend, station);
