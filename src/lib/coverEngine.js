@@ -47,8 +47,8 @@ export const addGeojsonLayer = async (map, legend, key) => {
         // Set the visibility based on the legend item
         map.setLayoutProperty(
             legend[key].id,
-            'visibility',
-            legend[key].visibility ? 'visible' : 'none'
+            "visibility",
+            legend[key].visibility ? "visible" : "none"
         );
     }
 };
