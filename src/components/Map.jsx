@@ -2,9 +2,8 @@
 
 import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
-import * as maptilerweather from '@maptiler/weather';
 import { baseMapConfig, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
-import { addGeojsonLayer, addHoverEffect, calculatePointAndCoordinates, popUpInfo, timeSlider, windDirectionAndSpeed } from '@/lib/coverEngine';
+import { addGeojsonLayer, addHoverEffect, calculatePointAndCoordinates, popUpInfo, primaryLayer, timeSlider, windDirectionAndSpeed } from '@/lib/coverEngine';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import "../styles/map.css";
 import useLayerStore from "../stores/layer";
@@ -30,22 +29,9 @@ export default function Map({ maptilerKey }) {
             ...baseMapConfig,
         });
 
-        const temperatureLayer = new maptilerweather.TemperatureLayer(
-            temperaturConfigLayer
-        );
-        const windLayer = new maptilerweather.WindLayer({
-            colorramp: maptilerweather.ColorRamp.builtin.NULL,
-            ...windConfigLayer,
-        });
-
         map.current.on("load", async () => {
-            map.current.setPaintProperty(
-                "Water",
-                "fill-color",
-                "rgba(0, 0, 0, 0.6)"
-            );
-            map.current.addLayer(windLayer);
-            map.current.addLayer(temperatureLayer, "Water");
+            // primary layer
+            primaryLayer(map.current)
 
             // primary cover
             for (const key in mergeLayer) {
@@ -62,7 +48,7 @@ export default function Map({ maptilerKey }) {
             calculatePointAndCoordinates(map.current)
 
             // wind direction and speed
-            windDirectionAndSpeed(map.current, windLayer)
+            windDirectionAndSpeed(map.current)
         });
     }, [zoom, mergeLayer]);
 
