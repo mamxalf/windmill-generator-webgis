@@ -9,6 +9,8 @@ import {
     Title,
     Tooltip,
     Legend,
+    ChartData,
+    ChartOptions,
 } from 'chart.js';
 
 ChartJS.register(
@@ -21,7 +23,7 @@ ChartJS.register(
     Legend
 );
 
-const ChartComponent = ({ data, options }) => {
+const ChartComponent = ({ data, options }: { data: ChartData<'line'>, options: ChartOptions<'line'> }) => {
     return <Line data={data} options={options} />;
 };
 
