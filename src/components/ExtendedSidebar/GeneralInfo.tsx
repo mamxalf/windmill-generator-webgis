@@ -6,7 +6,7 @@ export default function GeneralInfo() {
         <>
             <div className="h-full max-h-screen overflow-y-auto">
                 <h1 className="font-semibold tracking-wide">General info </h1>
-                <p className="text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm leading-6 tracking-normal">
                     Kabupaten Temanggung adalah sebuah wilayah kabupaten yang
                     terletak di Provinsi Jawa Tengah, Indonesia. Ibu kota
                     kabupaten ini terletak di Kecamatan Temanggung Kota.

@@ -21,6 +21,13 @@ export default function Legend() {
                             <div className="h-full w-full">
                                 <div className="mt-4 flex items-center justify-between p-1">
                                     <div className="flex items-center justify-center gap-3">
+                                        <div
+                                            style={{
+                                                background:
+                                                    mergeLayer[key].color,
+                                            }}
+                                            className="mr-5 center relative inline-block select-none whitespace-nowrap py-2 px-6 align-baseline font-sans text-xs font-bold uppercase leading-none text-white"
+                                        ></div>
                                         <input
                                             type="checkbox"
                                             className="defaultCheckbox relative flex h-[16px] min-h-[16px] w-[16px] min-w-[16px] items-center 
@@ -32,7 +39,7 @@ export default function Legend() {
                                             }
                                         />
                                         <p className="text-base tracking-normal font-normal text-zinc-700">
-                                            {` `} {mergeLayer[key].name} Layer
+                                            {` `} {mergeLayer[key].name} 
                                         </p>
                                     </div>
                                 </div>
