@@ -79,7 +79,7 @@ export const transformData = (raw: WeatherData[]): ChartData<"line"> => {
     const color = colors[index % colors.length];
 
     return {
-      label: `Month ${item.month}`,
+      label: getMonthName(item.month),
       data: watt,
       fill: false,
       backgroundColor: color.backgroundColor,
@@ -173,3 +173,21 @@ const colors = [
     borderColor: "rgba(102, 255, 102, 0.2)",
   },
 ];
+
+const getMonthName = (monthNumber: number): string => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  return monthNames[monthNumber - 1];
+};
