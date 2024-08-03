@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import * as maptilersdk from '@maptiler/sdk';
 import * as maptilerweather from '@maptiler/weather';
 import { baseMapConfig, temperaturConfigLayer, windConfigLayer } from '@/lib/option';
-import { addGeojsonLayer, addHoverEffect, calculatePointAndCoordinates, popUpInfo } from '@/lib/coverEngine';
+import { addGeojsonLayer, addHoverEffect, calculatePointAndCoordinates, popUpInfo, timeSlider, windDirectionAndSpeed } from '@/lib/coverEngine';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import "../styles/map.css";
 import useLayerStore from "../stores/layer";
@@ -60,6 +60,9 @@ export default function Map({ maptilerKey }) {
 
             // calculate point and coordinates
             calculatePointAndCoordinates(map.current)
+
+            // wind direction and speed
+            windDirectionAndSpeed(map.current, windLayer)
         });
     }, [zoom, mergeLayer]);
 
