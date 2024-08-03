@@ -69,7 +69,7 @@ export default function CoverInfo() {
     return (
         <>
             <div>
-                <h1 className="font-semibold tracking-wide">General info </h1>
+                <h1 className="font-semibold tracking-wide">Cover info </h1>
                 <section className="mt-4">
                     <div className="flex flex-col justify-center">
                         <div className="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
