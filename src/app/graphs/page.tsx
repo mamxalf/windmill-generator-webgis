@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import ChartComponent from '../Charts/Example'
+import ChartComponent from '../../components/Charts/Example'
 import { ChartData, ChartOptions } from 'chart.js';
 import { transformData } from '@/lib/formula';
 
