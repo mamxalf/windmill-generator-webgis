@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ChartComponent from '../../components/Charts/Line';
 import { ChartData, ChartOptions } from 'chart.js';
 import { transformData } from '@/lib/formula';
+import TableComponent from '@/components/Charts/Table';
 
 interface GraphData {
     year: number;
@@ -59,7 +60,14 @@ export default function Graph() {
             ) : (
                 data.map(({ year, chartData }) => (
                     <div key={year}>
-                        <ChartComponent data={chartData} options={options(year)} />
+                        <div>
+                            <h2>Table</h2>
+                            <TableComponent data={chartData} />
+                        </div>
+                        <div>
+                            <h2>Chart</h2>
+                            <ChartComponent data={chartData} options={options(year)} />
+                        </div>
                     </div>
                 ))
             )}

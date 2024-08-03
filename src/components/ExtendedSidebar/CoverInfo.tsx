@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import UseInfoStore from "@/stores/info";
 import useLayerStore from "@/stores/layer";
@@ -64,7 +64,7 @@ export default function CoverInfo() {
                 getGeoJsonLayer(key);
             }
         }
-    }, [legend]);
+    }, [legend, updateInfoStore]);
 
     return (
         <>
@@ -116,9 +116,9 @@ export default function CoverInfo() {
                                                     <h2 className="font-medium">
                                                         {coverInfo[key].luas
                                                             ? parseFloat(
-                                                                  coverInfo[key]
-                                                                      .luas
-                                                              ).toFixed(2)
+                                                                coverInfo[key]
+                                                                    .luas
+                                                            ).toFixed(2)
                                                             : ""} ha
                                                     </h2>
                                                 </td>
