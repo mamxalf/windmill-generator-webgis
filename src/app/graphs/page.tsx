@@ -53,7 +53,7 @@ export default function Graph() {
     };
 
     return (
-        <div>
+        <div className='m-20'>
             {loading ? (
                 <p>Loading...</p>
             ) : (
