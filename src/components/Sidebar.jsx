@@ -46,9 +46,8 @@ function SidebarItem({ onClick, isActive, children }) {
             <a
                 onClick={onClick}
                 href="#"
-                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
-                    isActive ? "bg-gray-100" : ""
-                }`}
+                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActive ? "bg-gray-100" : ""
+                    }`}
                 aria-current={isActive ? "page" : undefined}
             >
                 {children}
@@ -85,6 +84,19 @@ export default function Sidebar() {
                     <h1 className="text-center font-semibold text-emerald-700 text-xs">
                         Lng: <span id="lng-point">0</span>
                     </h1>
+                    <div className="mt-5 text-center font-semibold text-emerald-700 text-xs">
+                        Wind Speed and Direction:
+                        <div id="wind-speed">
+                        </div>
+                    </div>
+
+                    {/* docs: https://docs.maptiler.com/sdk-js/examples/weather-wind-direction/ */}
+                    <h1>Date Time :</h1>
+                    <div id="time-info">
+                        <span id="time-text"></span>
+                        <input type="range" id="time-slider" min="0" max="11" step="1"></input>
+                    </div>
+
                     <ul className="mt-6 space-y-1">
                         <SidebarItem
                             onClick={() => handleClick(<Legend />, "legend")}
