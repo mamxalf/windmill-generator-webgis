@@ -7,6 +7,10 @@ const TableComponent = ({ data }: { data: ChartData<"line"> }) => {
     // Type guard to check if a value is a number
     const isNumber = (value: any): value is number => typeof value === "number";
 
+    const formatNumber = (value: number): string => {
+        return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
     return (
         <section className="mt-4">
             <div className="flex flex-col justify-center">
@@ -37,7 +41,7 @@ const TableComponent = ({ data }: { data: ChartData<"line"> }) => {
                                             <td className="p-2" key={monthIndex}>
                                                 <div className="text-left">
                                                     {isNumber(dataset.data[dayIndex])
-                                                        ? `${dataset.data[dayIndex].toFixed(2)} watt`
+                                                        ? `${formatNumber(dataset.data[dayIndex])} watt`
                                                         : '-'}
                                                 </div>
                                             </td>
