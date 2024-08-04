@@ -12,12 +12,12 @@ const TableComponent = ({ data }: { data: ChartData<"line"> }) => {
     };
 
     return (
-        <section className="mt-4">
+        <section>
             <div className="flex flex-col justify-center">
-                <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+                <div className="w-full mx-auto bg-white shadow-xl p-4 rounded-2xl border-2 border-gray-50">
                     <div className="overflow-x-auto">
                         <table className="table-auto w-full">
-                            <thead className="text-xs font-semibold text-gray-400 bg-gray-50">
+                            <thead className="text-sm font-semibold ">
                                 <tr>
                                     <th className="p-2 whitespace-nowrap">Day</th>
                                     {data.datasets.map((dataset, index) => (
