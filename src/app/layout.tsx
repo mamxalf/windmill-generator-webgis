@@ -21,7 +21,7 @@ export default function RootLayout({
             <body className={`flex ${inter.className}`}>
                 <Sidebar />
 
-                <div className="flex-1 bg-gray-100">{children}</div>
+                <div className="flex-1 h-screen overflow-auto">{children}</div>
             </body>
         </html>
     );

@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 import Legend from "./ExtendedSidebar/Legend";
 import GeneralInfo from "./ExtendedSidebar/GeneralInfo";
 import StationInfo from "./ExtendedSidebar/Station";
 import CoverInfo from "./ExtendedSidebar/CoverInfo";
 import Graph from "./ExtendedSidebar/Graph";
-import Image from 'next/image'
-
+import Image from "next/image";
 
 function ExtendSidebar({ onClick, children }) {
     return (
@@ -63,6 +64,7 @@ export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const [componentChild, setComponentChild] = useState(null);
     const [isActiveMenu, setIsActiveMenu] = useState(null);
+    const pathname = usePathname();
 
     function handleClick(component, menu) {
         setComponentChild(component);
@@ -73,9 +75,10 @@ export default function Sidebar() {
     return (
         <>
             <div className="w-64 px-4 py-6 h-screen flex flex-col justify-between border-e bg-white">
+                {/* Top */}
                 <div>
                     <h1 className="text-center font-semibold text-emerald-700 text-xl">
-                        Windmill Generator
+                        <Link href="/">Windmill Generator</Link>
                     </h1>
                     <hr className="my-2" />
                     <ul className="mt-6 space-y-1">
@@ -146,7 +149,13 @@ export default function Sidebar() {
                         </SidebarItem>
                     </ul>
                 </div>
-                <div>
+
+                {/* Bottom */}
+                <div
+                    style={{
+                        display: `${pathname === "/graphs" ? "none" : "block"}`,
+                    }}
+                >
                     <h1 className="text-center font-semibold text-emerald-700 text-xs">
                         X: <span id="x-point">0</span> Y:{" "}
                         <span id="y-point">0</span>
@@ -184,7 +193,6 @@ export default function Sidebar() {
                                                 color="yellow"
                                                 alt="Picture of the author"
                                             />
-                                            
                                         </div>
                                         <div id="temp">
                                             <div className="text-center font-semibold text-emerald-700 text-sm">
