@@ -1,45 +1,40 @@
 "use client";
 
-import useLayerStore from "@/stores/layer";
+import { useEffect, useState } from 'react';
+import ChartComponent from '../Charts/Line'
+import { ChartData, ChartOptions } from 'chart.js';
+import { transformData } from '@/lib/formula';
 
 export default function Graph() {
-    const legend = useLayerStore((state) => state.legend);
-    const station = useLayerStore((state) => state.station);
-    const mergeLayer = Object.assign({}, legend, station);
-    const toggleVisibility = useLayerStore((state) => state.toggleVisibility);
+    const [data, setData] = useState<any>(null);
 
-    const handleCheckboxChange = (itemId: string) => {
-        toggleVisibility(itemId);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('/data/meteostat-2024.json');
+            const data = await response.json();
+            setData(transformData(data));
+        };
+
+        fetchData();
+    }, []);
+
+    const options: ChartOptions<'line'> = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Lighting Generated (watt) 2024',
+            },
+        },
     };
+
     return (
         <>
             <div>
-                <h1 className="font-semibold tracking-wide">Layer List</h1>
-                <ul>
-                    {Object.keys(mergeLayer).map((key) => (
-                        <li key={mergeLayer[key].id}>
-                            <div className="h-full w-full">
-                                <div className="mt-4 flex items-center justify-between p-1">
-                                    <div className="flex items-center justify-center gap-3">
-                                        <input
-                                            type="checkbox"
-                                            className="defaultCheckbox relative flex h-[16px] min-h-[16px] w-[16px] min-w-[16px] items-center 
-                            justify-center rounded-md border border-gray-300 text-white/0 outline-none transition duration-[0.2s]
-                            checked:border-none checked:text-white hover:cursor-pointer checked:bg-red-500"
-                                            checked={mergeLayer[key].visibility}
-                                            onChange={() =>
-                                                handleCheckboxChange(key)
-                                            }
-                                        />
-                                        <p className="text-base tracking-normal font-normal text-zinc-700">
-                                            {` `} {mergeLayer[key].name} Layer
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {data ? <ChartComponent data={data} options={options} /> : 'Loading...'}
             </div>
         </>
     );
