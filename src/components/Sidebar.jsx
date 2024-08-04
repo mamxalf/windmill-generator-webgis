@@ -7,6 +7,8 @@ import GeneralInfo from "./ExtendedSidebar/GeneralInfo";
 import StationInfo from "./ExtendedSidebar/Station";
 import CoverInfo from "./ExtendedSidebar/CoverInfo";
 import Graph from "./ExtendedSidebar/Graph";
+import Image from 'next/image'
+
 
 function ExtendSidebar({ onClick, children }) {
     return (
@@ -46,8 +48,9 @@ function SidebarItem({ onClick, isActive, children }) {
             <a
                 onClick={onClick}
                 href="#"
-                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${isActive ? "bg-gray-100" : ""
-                    }`}
+                className={`block rounded-lg px-4 py-2 text-sm font-medium text-gray-700 ${
+                    isActive ? "bg-gray-100" : ""
+                }`}
                 aria-current={isActive ? "page" : undefined}
             >
                 {children}
@@ -69,34 +72,12 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="flex w-52 h-screen flex-col justify-between border-e bg-white">
-                <div className="px-4 py-6">
+            <div className="w-64 px-4 py-6 h-screen flex flex-col justify-between border-e bg-white">
+                <div>
                     <h1 className="text-center font-semibold text-emerald-700 text-xl">
                         Windmill Generator
                     </h1>
                     <hr className="my-2" />
-                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
-                        X: <span id="x-point">0</span> Y: <span id="y-point">0</span>
-                    </h1>
-                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
-                        Lat: <span id="lat-point">0</span>
-                    </h1>
-                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
-                        Lng: <span id="lng-point">0</span>
-                    </h1>
-                    <div className="mt-5 text-center font-semibold text-emerald-700 text-xs">
-                        Wind Speed and Direction:
-                        <div id="wind-speed">
-                        </div>
-                    </div>
-
-                    {/* docs: https://docs.maptiler.com/sdk-js/examples/weather-wind-direction/ */}
-                    <h1>Date Time :</h1>
-                    <div id="time-info">
-                        <span id="time-text"></span>
-                        <input type="range" id="time-slider" min="0" max="11" step="1"></input>
-                    </div>
-
                     <ul className="mt-6 space-y-1">
                         <SidebarItem
                             onClick={() => handleClick(<Legend />, "legend")}
@@ -107,7 +88,10 @@ export default function Sidebar() {
                         <li>
                             <details className="group [&_summary::-webkit-details-marker]:hidden">
                                 <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                    <span className="text-sm font-medium"> Information </span>
+                                    <span className="text-sm font-medium">
+                                        {" "}
+                                        Information{" "}
+                                    </span>
                                     <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -125,19 +109,28 @@ export default function Sidebar() {
                                 </summary>
                                 <ul className="mt-2 space-y-1 px-4">
                                     <SidebarItem
-                                        onClick={() => handleClick(<GeneralInfo />, "info")}
+                                        onClick={() =>
+                                            handleClick(<GeneralInfo />, "info")
+                                        }
                                         isActive={isActiveMenu === "info"}
                                     >
                                         General Info
                                     </SidebarItem>
                                     <SidebarItem
-                                        onClick={() => handleClick(<CoverInfo />, "cover")}
+                                        onClick={() =>
+                                            handleClick(<CoverInfo />, "cover")
+                                        }
                                         isActive={isActiveMenu === "cover"}
                                     >
                                         Cover Info
                                     </SidebarItem>
                                     <SidebarItem
-                                        onClick={() => handleClick(<StationInfo />, "station")}
+                                        onClick={() =>
+                                            handleClick(
+                                                <StationInfo />,
+                                                "station"
+                                            )
+                                        }
                                         isActive={isActiveMenu === "station"}
                                     >
                                         Station Info
@@ -152,6 +145,70 @@ export default function Sidebar() {
                             Graphs
                         </SidebarItem>
                     </ul>
+                </div>
+                <div>
+                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
+                        X: <span id="x-point">0</span> Y:{" "}
+                        <span id="y-point">0</span>
+                    </h1>
+                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
+                        Lat: <span id="lat-point">0</span>
+                    </h1>
+                    <h1 className="text-center font-semibold text-emerald-700 text-xs">
+                        Lng: <span id="lng-point">0</span>
+                    </h1>
+
+                    {/* docs: https://docs.maptiler.com/sdk-js/examples/weather-wind-direction/ */}
+                    <div id="time-info" className="mt-2 mb-2">
+                        <div className="bg-white shadow-2xl p-6 rounded-2xl border-2 border-gray-50">
+                            <div className="flex flex-col">
+                                <div>
+                                    <h2 className="font-bold text-gray-600 text-center">
+                                        <span
+                                            id="time-text"
+                                            className="text-xs"
+                                        ></span>
+                                    </h2>
+                                    <span
+                                        id="time-text"
+                                        className="text-xs"
+                                    ></span>
+                                </div>
+                                <div className="my-6">
+                                    <div className="flex flex-row space-x-4 items-center">
+                                        <div id="icon">
+                                            <Image
+                                                src="/turbine.png"
+                                                width={64}
+                                                height={64}
+                                                color="yellow"
+                                                alt="Picture of the author"
+                                            />
+                                            
+                                        </div>
+                                        <div id="temp">
+                                            <div className="text-center font-semibold text-emerald-700 text-sm">
+                                                <div id="wind-speed"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="w-full place-items-end mt-2">
+                                    <input
+                                        type="range"
+                                        id="time-slider"
+                                        min="0"
+                                        max="11"
+                                        step="1"
+                                        className="rounded-lg overflow-hidden appearance-none bg-emerald-700 accent-white h-4 w-full mt-2"
+                                    ></input>
+                                    <p className="text-center text-xs font-semibold text-gray-600 mt-1">
+                                        Time range
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
