@@ -72,7 +72,7 @@ export const transformData = (raw: WeatherData[]): ChartData<"line"> => {
   const data = groupDataByMonth(raw);
   const datasets = data.map((item, index) => {
     const watt = item.data.map((entry) => {
-      const airDensity = calculateAirDensity(entry.pres, entry.tavg);
+      const airDensity = calculateAirDensity(entry.pres || 1010, entry.tavg);
       const windSpeed = convertKmhToMs(entry.wspd);
       return calculateWindTurbinePower(airDensity, 10, windSpeed, 0.45);
     });
@@ -116,6 +116,7 @@ const groupDataByMonth = (data: WeatherData[]): GroupedData[] => {
   const groupedData = data.reduce(
     (acc: Record<number, WeatherData[]>, curr: WeatherData) => {
       const month = new Date(curr.date).getMonth() + 1; // getMonth() is zero-based
+
       if (!acc[month]) {
         acc[month] = [];
       }
@@ -130,6 +131,16 @@ const groupDataByMonth = (data: WeatherData[]): GroupedData[] => {
     data: groupedData[parseInt(month)],
   }));
 };
+
+export const convertDateToMMDDYYYY = (data: WeatherData[]): WeatherData[] => {
+  return data.map((item) => {
+    const [day, month, year] = item.date.split('-')
+    return {
+      ...item,
+      date: `${month}/${day}/${year}`
+    }
+  })
+}
 
 const colors = [
   {
