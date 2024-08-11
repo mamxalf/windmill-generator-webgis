@@ -8,7 +8,7 @@ import Legend from "./ExtendedSidebar/Legend";
 import GeneralInfo from "./ExtendedSidebar/GeneralInfo";
 import StationInfo from "./ExtendedSidebar/Station";
 import CoverInfo from "./ExtendedSidebar/CoverInfo";
-import Graph from "./ExtendedSidebar/Graph";
+// import Graph from "./ExtendedSidebar/Graph";
 import Image from "next/image";
 
 function ExtendSidebar({ onClick, children }) {
@@ -211,12 +211,12 @@ export default function Sidebar() {
                                 </ul>
                             </details>
                         </li>
-                        <SidebarItem
+                        {/* <SidebarItem
                             onClick={() => handleClick(<Graph />, "graph")}
                             isActive={isActiveMenu === "graph"}
                         >
                             Graph
-                        </SidebarItem>
+                        </SidebarItem> */}
                     </ul>
                 </div>
 
