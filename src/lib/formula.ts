@@ -66,15 +66,34 @@ export const convertKmhToMs = (speedKmh: number): number => {
 };
 
 /**
+ * Menghitung rata-rata dari array angka.
+ * @param numbers Array angka yang akan dihitung rata-ratanya.
+ * @returns Rata-rata dari angka-angka dalam array.
+ */
+const calculateAverage = (numbers: number[]): number => {
+  const total = numbers.reduce((sum, value) => sum + value, 0);
+  return numbers.length > 0 ? total / numbers.length : 0;
+};
+
+/**
  * rubah data untuk chart
  */
 export const transformData = (raw: WeatherData[]): ChartData<"line"> => {
   const data = groupDataByMonth(raw);
+  const totalWattPerDay: number[] = Array(31).fill(0);
+  const countPerDay: number[] = Array(31).fill(0);
+
   const datasets = data.map((item, index) => {
-    const watt = item.data.map((entry) => {
+    const watt = item.data.map((entry, i) => {
       const airDensity = calculateAirDensity(entry.pres || 1010, entry.tavg);
       const windSpeed = convertKmhToMs(entry.wspd);
-      return 516 * calculateWindTurbinePower(airDensity, 10, windSpeed, 0.45);
+      const power =
+        516 * calculateWindTurbinePower(airDensity, 10, windSpeed, 0.45);
+
+      totalWattPerDay[i] += power;
+      countPerDay[i] += 1;
+
+      return power;
     });
     const color = colors[index % colors.length];
 
@@ -86,6 +105,16 @@ export const transformData = (raw: WeatherData[]): ChartData<"line"> => {
       borderColor: color.borderColor,
     };
   });
+
+  // Calculate average watt per day
+  const averageWattPerDay = totalWattPerDay.map((totalWatt, index) => {
+    return countPerDay[index] > 0 ? totalWatt / countPerDay[index] : 0;
+  });
+
+  const avg = calculateAverage(averageWattPerDay);
+  console.log("AVG", avg.toFixed(2));
+
+  // You can now use `averageWattPerDay` for further analysis or display it in a chart.
 
   return {
     labels: Array.from({ length: 31 }, (_, i) => `Day ${i + 1}`),
